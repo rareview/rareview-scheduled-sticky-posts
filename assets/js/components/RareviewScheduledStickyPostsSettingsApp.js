@@ -18,8 +18,7 @@ import { __ } from '@wordpress/i18n';
 const SETTINGS_REST_PATH = '/wp/v2/settings';
 const SETTINGS_OPTION_KEY = 'rareview_scheduled_sticky_posts_post_types';
 const CACHE_LENGTH_OPTION_KEY = 'rareview_scheduled_sticky_posts_cache_length';
-const CLEAR_CACHE_REST_PATH =
-	'/rareview-scheduled-sticky-posts/v1/cache/clear';
+const CLEAR_CACHE_REST_PATH = '/rareview-scheduled-sticky-posts/v1/cache/clear';
 const RAREVIEW_SCHEDULED_STICKY_POSTS_POSTS_REST_PATH =
 	'/rareview-scheduled-sticky-posts/v1/sticky-posts';
 const CLEAR_RAREVIEW_SCHEDULED_STICKY_POSTS_POSTS_REST_PATH =
@@ -29,15 +28,20 @@ const RareviewScheduledStickyPostsSettingsApp = () => {
 	const [ isLoading, setIsLoading ] = useState( true );
 	const [ isSaving, setIsSaving ] = useState( false );
 	const [ isClearingCache, setIsClearingCache ] = useState( false );
-	const [ isLoadingRareviewScheduledStickyPostsPosts, setIsLoadingRareviewScheduledStickyPostsPosts ] =
-		useState( false );
-	const [ isClearingRareviewScheduledStickyPostsPosts, setIsClearingRareviewScheduledStickyPostsPosts ] =
-		useState( false );
+	const [
+		isLoadingRareviewScheduledStickyPostsPosts,
+		setIsLoadingRareviewScheduledStickyPostsPosts,
+	] = useState( false );
+	const [
+		isClearingRareviewScheduledStickyPostsPosts,
+		setIsClearingRareviewScheduledStickyPostsPosts,
+	] = useState( false );
 	const [ errorMessage, setErrorMessage ] = useState( '' );
 	const [ successMessage, setSuccessMessage ] = useState( '' );
 	const [ selectedPostTypes, setSelectedPostTypes ] = useState( [] );
 	const [ cacheLength, setCacheLength ] = useState( '15' );
-	const [ stickyPostsByType, setRareviewScheduledStickyPostsPostsByType ] = useState( {} );
+	const [ stickyPostsByType, setRareviewScheduledStickyPostsPostsByType ] =
+		useState( {} );
 	const [ selectedStickyIdsByType, setSelectedStickyIdsByType ] = useState(
 		{}
 	);
@@ -74,7 +78,10 @@ const RareviewScheduledStickyPostsSettingsApp = () => {
 			} catch ( error ) {
 				setErrorMessage(
 					error?.message ||
-						__( 'Unable to load settings.', 'rareview-scheduled-sticky-posts' )
+						__(
+							'Unable to load settings.',
+							'rareview-scheduled-sticky-posts'
+						)
 				);
 			} finally {
 				setIsLoading( false );
@@ -101,7 +108,10 @@ const RareviewScheduledStickyPostsSettingsApp = () => {
 			} catch ( error ) {
 				setErrorMessage(
 					error?.message ||
-						__( 'Unable to load sticky posts.', 'rareview-scheduled-sticky-posts' )
+						__(
+							'Unable to load sticky posts.',
+							'rareview-scheduled-sticky-posts'
+						)
 				);
 			} finally {
 				setIsLoadingRareviewScheduledStickyPostsPosts( false );
@@ -123,7 +133,10 @@ const RareviewScheduledStickyPostsSettingsApp = () => {
 		} catch ( error ) {
 			setErrorMessage(
 				error?.message ||
-					__( 'Unable to load sticky posts.', 'rareview-scheduled-sticky-posts' )
+					__(
+						'Unable to load sticky posts.',
+						'rareview-scheduled-sticky-posts'
+					)
 			);
 		} finally {
 			setIsLoadingRareviewScheduledStickyPostsPosts( false );
@@ -179,11 +192,13 @@ const RareviewScheduledStickyPostsSettingsApp = () => {
 			} );
 
 			setCacheLength( String( normalizedCacheLength ) );
-			setSuccessMessage( __( 'Settings saved.', 'rareview-scheduled-sticky-posts' ) );
+			setSuccessMessage(
+				__( 'Settings saved.', 'rareview-scheduled-sticky-posts' )
+			);
 			await fetchRareviewScheduledStickyPostsPosts();
 		} catch ( error ) {
 			setErrorMessage(
-				error?.message || __( 'Unable to save settings.', 'rareview-scheduled-sticky-posts' )
+				error?.message || __( 'Unable to save settings.', 'rareview-scheduled-sticky-posts' ) // eslint-disable-line
 			);
 		} finally {
 			setIsSaving( false );
@@ -207,14 +222,20 @@ const RareviewScheduledStickyPostsSettingsApp = () => {
 			);
 
 			if ( response?.cleared > 0 ) {
-				cacheMessage = __( 'Sticky caches cleared.', 'rareview-scheduled-sticky-posts' );
+				cacheMessage = __(
+					'Sticky caches cleared.',
+					'rareview-scheduled-sticky-posts'
+				);
 			}
 
 			setSuccessMessage( cacheMessage );
 		} catch ( error ) {
 			setErrorMessage(
 				error?.message ||
-					__( 'Unable to clear sticky caches.', 'rareview-scheduled-sticky-posts' )
+					__(
+						'Unable to clear sticky caches.',
+						'rareview-scheduled-sticky-posts'
+					)
 			);
 		} finally {
 			setIsClearingCache( false );
@@ -259,7 +280,10 @@ const RareviewScheduledStickyPostsSettingsApp = () => {
 		} catch ( error ) {
 			setErrorMessage(
 				error?.message ||
-					__( 'Unable to clear sticky behavior.', 'rareview-scheduled-sticky-posts' )
+					__(
+						'Unable to clear sticky behavior.',
+						'rareview-scheduled-sticky-posts'
+					)
 			);
 		} finally {
 			setIsClearingRareviewScheduledStickyPostsPosts( false );
@@ -270,7 +294,9 @@ const RareviewScheduledStickyPostsSettingsApp = () => {
 		await clearRareviewScheduledStickyPostsPosts( [ postId ] );
 	};
 
-	const clearSelectedRareviewScheduledStickyPostsPosts = async ( postType ) => {
+	const clearSelectedRareviewScheduledStickyPostsPosts = async (
+		postType
+	) => {
 		const selectedIds = selectedStickyIdsByType[ postType ] || [];
 		await clearRareviewScheduledStickyPostsPosts( selectedIds );
 	};
@@ -288,11 +314,15 @@ const RareviewScheduledStickyPostsSettingsApp = () => {
 		const now = Math.floor( Date.now() / 1000 );
 
 		if ( post?.stickyStart > now ) {
-			labels.push( __( 'Sticky (Upcoming)', 'rareview-scheduled-sticky-posts' ) );
+			labels.push(
+				__( 'Sticky (Upcoming)', 'rareview-scheduled-sticky-posts' )
+			);
 		}
 
 		if ( post?.stickyUntil > 0 && post?.stickyUntil <= now ) {
-			labels.push( __( 'Sticky (Expired)', 'rareview-scheduled-sticky-posts' ) );
+			labels.push(
+				__( 'Sticky (Expired)', 'rareview-scheduled-sticky-posts' )
+			);
 		}
 
 		return labels;
@@ -346,21 +376,33 @@ const RareviewScheduledStickyPostsSettingsApp = () => {
 					) }
 				</p>
 
-				{ availablePostTypes.map( ( { slug, label } ) => (
-					<CheckboxControl
-						key={ slug }
-						label={ label }
-						checked={ selectedPostTypes.includes( slug ) }
-						onChange={ ( isChecked ) =>
-							togglePostType( slug, isChecked )
-						}
-					/>
-				) ) }
+				<div
+					style={ {
+						display: 'flex',
+						flexDirection: 'column',
+						gap: '0.25rem',
+						marginBottom: '1rem',
+					} }
+				>
+					{ availablePostTypes.map( ( { slug, label } ) => (
+						<CheckboxControl
+							key={ slug }
+							label={ label }
+							checked={ selectedPostTypes.includes( slug ) }
+							onChange={ ( isChecked ) =>
+								togglePostType( slug, isChecked )
+							}
+						/>
+					) ) }
+				</div>
 
 				<TextControl
 					type="number"
 					min="1"
-					label={ __( 'Cache length in minutes', 'rareview-scheduled-sticky-posts' ) }
+					label={ __(
+						'Cache length in minutes',
+						'rareview-scheduled-sticky-posts'
+					) }
 					help={ __(
 						'How long sticky query results should be cached.',
 						'rareview-scheduled-sticky-posts'
@@ -373,29 +415,39 @@ const RareviewScheduledStickyPostsSettingsApp = () => {
 					variant="primary"
 					onClick={ saveSettings }
 					disabled={
-						isSaving || isClearingCache || isClearingRareviewScheduledStickyPostsPosts
+						isSaving ||
+						isClearingCache ||
+						isClearingRareviewScheduledStickyPostsPosts
 					}
 					style={ { marginRight: '1em' } }
 				>
-					{ isSaving
-						? __( 'Saving…', 'rareview-scheduled-sticky-posts' )
-						: __( 'Save Changes', 'rareview-scheduled-sticky-posts' ) }
+					{
+						isSaving
+						? __( 'Saving…', 'rareview-scheduled-sticky-posts' ) // eslint-disable-line
+						: __( 'Save Changes', 'rareview-scheduled-sticky-posts' ) // eslint-disable-line
+					}
 				</Button>
 
 				<Button
 					variant="secondary"
 					onClick={ clearCache }
 					disabled={
-						isSaving || isClearingCache || isClearingRareviewScheduledStickyPostsPosts
+						isSaving ||
+						isClearingCache ||
+						isClearingRareviewScheduledStickyPostsPosts
 					}
 				>
-					{ isClearingCache
-						? __( 'Clearing cache…', 'rareview-scheduled-sticky-posts' )
-						: __( 'Clear Cache Now', 'rareview-scheduled-sticky-posts' ) }
+					{
+						isClearingCache
+						? __( 'Clearing cache…', 'rareview-scheduled-sticky-posts' ) // eslint-disable-line
+						: __( 'Clear Cache Now', 'rareview-scheduled-sticky-posts' ) // eslint-disable-line
+					}
 				</Button>
 
 				<hr style={ { margin: '24px 0' } } />
-				<h2>{ __( 'Sticky Posts', 'rareview-scheduled-sticky-posts' ) }</h2>
+				<h2>
+					{ __( 'Sticky Posts', 'rareview-scheduled-sticky-posts' ) }
+				</h2>
 
 				{ isLoadingRareviewScheduledStickyPostsPosts && <Spinner /> }
 

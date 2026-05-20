@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Rareview Scheduled Sticky Posts
  * Description: Add, schedule, and manage sticky posts across post types.
- * Version:     1.0.0
+ * Version:     1.1.0
  * Author:      Rareview®
  * Author URI:  https://rareview.com
  * License:     GPL v2 or later

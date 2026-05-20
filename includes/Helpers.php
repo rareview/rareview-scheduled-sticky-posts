@@ -24,7 +24,7 @@ class Helpers {
 	 * @return string Template version.
 	 */
 	public static function version() {
-		return '1.0.0';
+		return '1.1.0';
 	}
 
 	/**
@@ -96,16 +96,16 @@ class Helpers {
 			$current_time = time();
 
 			$args = [
-				'post_type'              => $post_type,
-				'post_status'            => 'publish',
-				'posts_per_page'         => -1,
-				'fields'                 => 'ids',
-				'rareview_scheduled_sticky_posts_post_types'    => false,
-				'ignore_rareview_scheduled_sticky_posts_posts'  => true,
-				'no_found_rows'          => true,
-				'update_post_meta_cache' => false,
-				'update_post_term_cache' => false,
-				'meta_query'             => [ // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+				'post_type'                                    => $post_type,
+				'post_status'                                  => 'publish',
+				'posts_per_page'                               => -1,
+				'fields'                                       => 'ids',
+				'rareview_scheduled_sticky_posts_post_types'   => false,
+				'ignore_rareview_scheduled_sticky_posts_posts' => true,
+				'no_found_rows'                                => true,
+				'update_post_meta_cache'                       => false,
+				'update_post_term_cache'                       => false,
+				'meta_query'                                   => [ // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 					'relation' => 'AND',
 					[
 						'key'     => Register::RAREVIEW_SCHEDULED_STICKY_POSTS_META_KEY,
